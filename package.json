@@ -1,16 +1,27 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "",
-  "main": "generate_blog.js",
+  "description": "Personal technical blog with VitePress, D3 knowledge graph, and AI navigation.",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vitepress dev .",
+    "build": "npm run generate:data && vitepress build .",
+    "preview": "vitepress preview .",
+    "generate:data": "node scripts/generate-site-data.cjs"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "vitepress",
+    "blog",
+    "d3",
+    "deepseek"
+  ],
+  "author": "zengye20040311-cmd",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "docx": "^9.7.1"
+    "d3": "^7.9.0",
+    "gray-matter": "^4.0.3",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.17"
   }
 }
