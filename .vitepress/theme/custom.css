@@ -22,6 +22,37 @@ body {
   background: transparent;
 }
 
+.atlas-home .VPDoc {
+  padding-bottom: 4rem;
+}
+
+.atlas-home .VPDoc .container {
+  width: min(1480px, calc(100vw - 48px));
+  max-width: 1480px !important;
+}
+
+.atlas-home .VPDocAside {
+  display: none !important;
+}
+
+.atlas-home .VPDoc.has-aside .content,
+.atlas-home .VPDoc .content {
+  width: 100%;
+}
+
+.atlas-home .VPDoc .content,
+.atlas-home .VPDoc .content-container,
+.atlas-home .VPDoc .vp-doc {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+@media (max-width: 960px) {
+  .atlas-home .VPDoc .container {
+    width: min(100%, calc(100vw - 24px));
+  }
+}
+
 .atlas-grid {
   display: grid;
   gap: 1.5rem;

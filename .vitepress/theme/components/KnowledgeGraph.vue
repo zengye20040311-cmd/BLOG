@@ -324,7 +324,7 @@ onBeforeUnmount(() => {
 }
 
 .knowledge-graph__layout {
-  grid-template-columns: minmax(0, 1.8fr) minmax(260px, 0.9fr);
+  grid-template-columns: minmax(0, 2.35fr) minmax(280px, 0.85fr);
 }
 
 .knowledge-graph__canvas,
@@ -336,7 +336,7 @@ onBeforeUnmount(() => {
 }
 
 .knowledge-graph__canvas {
-  min-height: 560px;
+  min-height: 620px;
   overflow: hidden;
 }
 
@@ -396,6 +396,26 @@ onBeforeUnmount(() => {
 .knowledge-graph__panel span {
   color: #526173;
   font-size: 0.88rem;
+}
+
+@media (min-width: 1280px) {
+  .knowledge-graph__layout {
+    grid-template-columns: minmax(0, 3fr) minmax(300px, 360px);
+  }
+
+  .knowledge-graph__canvas {
+    min-height: 680px;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 961px) {
+  .knowledge-graph__layout {
+    grid-template-columns: minmax(0, 2fr) minmax(260px, 320px);
+  }
+
+  .knowledge-graph__canvas {
+    min-height: 560px;
+  }
 }
 
 @media (max-width: 960px) {

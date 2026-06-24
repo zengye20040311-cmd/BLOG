@@ -1,6 +1,8 @@
 ---
 title: Ye's Knowledge Atlas
 titleTemplate: false
+pageClass: atlas-home
+aside: false
 ---
 
 # 知识图谱式个人博客
