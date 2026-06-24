@@ -7,6 +7,8 @@ titleTemplate: false
 
 这里不是普通的时间线博客，而是围绕强化学习、Agent、LLM 和工程实践构建的一张个人知识地图。后续首页会嵌入交互式图谱；当前版本先把内容结构、项目页和展示组件搭起来。
 
+<KnowledgeGraph />
+
 <div class="atlas-grid">
   <div class="atlas-panel">
     <h3>为什么做这个博客</h3>

@@ -1,5 +1,306 @@
 {
-  "generatedAt": "2026-06-24T06:06:28.117Z",
-  "nodes": [],
-  "links": []
+  "generatedAt": "2026-06-24T06:08:51.089Z",
+  "nodes": [
+    {
+      "id": "PPO",
+      "label": "PPO",
+      "category": "llm",
+      "count": 2,
+      "articles": [
+        {
+          "title": "RLHF 完整解析：SFT -> RM -> PPO",
+          "route": "/articles/llm/rlhf-explained",
+          "summary": "梳理 RLHF 的训练链路，以及每一环真正解决了什么问题。"
+        },
+        {
+          "title": "PPO 深入理解：从策略梯度到裁剪优化",
+          "route": "/articles/rl/ppo-deep-dive",
+          "summary": "从 surrogate objective 的直觉出发，理解 PPO 为什么在实践中更稳。"
+        }
+      ]
+    },
+    {
+      "id": "PyTorch",
+      "label": "PyTorch",
+      "category": "rl",
+      "count": 2,
+      "articles": [
+        {
+          "title": "DQN 原理与 PyTorch 实现",
+          "route": "/articles/rl/dqn-implementation",
+          "summary": "从 Bellman 方程到经验回放和目标网络，完整拆解 DQN 的实现路径。"
+        },
+        {
+          "title": "PPO 深入理解：从策略梯度到裁剪优化",
+          "route": "/articles/rl/ppo-deep-dive",
+          "summary": "从 surrogate objective 的直觉出发，理解 PPO 为什么在实践中更稳。"
+        }
+      ]
+    },
+    {
+      "id": "RL",
+      "label": "RL",
+      "category": "rl",
+      "count": 2,
+      "articles": [
+        {
+          "title": "DQN 原理与 PyTorch 实现",
+          "route": "/articles/rl/dqn-implementation",
+          "summary": "从 Bellman 方程到经验回放和目标网络，完整拆解 DQN 的实现路径。"
+        },
+        {
+          "title": "PPO 深入理解：从策略梯度到裁剪优化",
+          "route": "/articles/rl/ppo-deep-dive",
+          "summary": "从 surrogate objective 的直觉出发，理解 PPO 为什么在实践中更稳。"
+        }
+      ]
+    },
+    {
+      "id": "Agent",
+      "label": "Agent",
+      "category": "agent",
+      "count": 1,
+      "articles": [
+        {
+          "title": "Agent Memory 系统设计：从查字典到回忆",
+          "route": "/articles/agent/memory-system-design",
+          "summary": "讨论 Agent 中短期记忆、长期记忆和可检索记忆的职责边界。"
+        }
+      ]
+    },
+    {
+      "id": "CartPole",
+      "label": "CartPole",
+      "category": "rl",
+      "count": 1,
+      "articles": [
+        {
+          "title": "DQN 原理与 PyTorch 实现",
+          "route": "/articles/rl/dqn-implementation",
+          "summary": "从 Bellman 方程到经验回放和目标网络，完整拆解 DQN 的实现路径。"
+        }
+      ]
+    },
+    {
+      "id": "DQN",
+      "label": "DQN",
+      "category": "rl",
+      "count": 1,
+      "articles": [
+        {
+          "title": "DQN 原理与 PyTorch 实现",
+          "route": "/articles/rl/dqn-implementation",
+          "summary": "从 Bellman 方程到经验回放和目标网络，完整拆解 DQN 的实现路径。"
+        }
+      ]
+    },
+    {
+      "id": "LLM",
+      "label": "LLM",
+      "category": "llm",
+      "count": 1,
+      "articles": [
+        {
+          "title": "RLHF 完整解析：SFT -> RM -> PPO",
+          "route": "/articles/llm/rlhf-explained",
+          "summary": "梳理 RLHF 的训练链路，以及每一环真正解决了什么问题。"
+        }
+      ]
+    },
+    {
+      "id": "Memory",
+      "label": "Memory",
+      "category": "agent",
+      "count": 1,
+      "articles": [
+        {
+          "title": "Agent Memory 系统设计：从查字典到回忆",
+          "route": "/articles/agent/memory-system-design",
+          "summary": "讨论 Agent 中短期记忆、长期记忆和可检索记忆的职责边界。"
+        }
+      ]
+    },
+    {
+      "id": "Policy-Gradient",
+      "label": "Policy-Gradient",
+      "category": "rl",
+      "count": 1,
+      "articles": [
+        {
+          "title": "PPO 深入理解：从策略梯度到裁剪优化",
+          "route": "/articles/rl/ppo-deep-dive",
+          "summary": "从 surrogate objective 的直觉出发，理解 PPO 为什么在实践中更稳。"
+        }
+      ]
+    },
+    {
+      "id": "RAG",
+      "label": "RAG",
+      "category": "agent",
+      "count": 1,
+      "articles": [
+        {
+          "title": "Agent Memory 系统设计：从查字典到回忆",
+          "route": "/articles/agent/memory-system-design",
+          "summary": "讨论 Agent 中短期记忆、长期记忆和可检索记忆的职责边界。"
+        }
+      ]
+    },
+    {
+      "id": "Reward-Model",
+      "label": "Reward-Model",
+      "category": "llm",
+      "count": 1,
+      "articles": [
+        {
+          "title": "RLHF 完整解析：SFT -> RM -> PPO",
+          "route": "/articles/llm/rlhf-explained",
+          "summary": "梳理 RLHF 的训练链路，以及每一环真正解决了什么问题。"
+        }
+      ]
+    },
+    {
+      "id": "RLHF",
+      "label": "RLHF",
+      "category": "llm",
+      "count": 1,
+      "articles": [
+        {
+          "title": "RLHF 完整解析：SFT -> RM -> PPO",
+          "route": "/articles/llm/rlhf-explained",
+          "summary": "梳理 RLHF 的训练链路，以及每一环真正解决了什么问题。"
+        }
+      ]
+    },
+    {
+      "id": "Systems",
+      "label": "Systems",
+      "category": "agent",
+      "count": 1,
+      "articles": [
+        {
+          "title": "Agent Memory 系统设计：从查字典到回忆",
+          "route": "/articles/agent/memory-system-design",
+          "summary": "讨论 Agent 中短期记忆、长期记忆和可检索记忆的职责边界。"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "PyTorch",
+      "target": "RL",
+      "weight": 2
+    },
+    {
+      "source": "Agent",
+      "target": "Memory",
+      "weight": 1
+    },
+    {
+      "source": "Agent",
+      "target": "RAG",
+      "weight": 1
+    },
+    {
+      "source": "Agent",
+      "target": "Systems",
+      "weight": 1
+    },
+    {
+      "source": "Memory",
+      "target": "RAG",
+      "weight": 1
+    },
+    {
+      "source": "Memory",
+      "target": "Systems",
+      "weight": 1
+    },
+    {
+      "source": "RAG",
+      "target": "Systems",
+      "weight": 1
+    },
+    {
+      "source": "LLM",
+      "target": "RLHF",
+      "weight": 1
+    },
+    {
+      "source": "LLM",
+      "target": "PPO",
+      "weight": 1
+    },
+    {
+      "source": "LLM",
+      "target": "Reward-Model",
+      "weight": 1
+    },
+    {
+      "source": "PPO",
+      "target": "RLHF",
+      "weight": 1
+    },
+    {
+      "source": "RLHF",
+      "target": "Reward-Model",
+      "weight": 1
+    },
+    {
+      "source": "PPO",
+      "target": "Reward-Model",
+      "weight": 1
+    },
+    {
+      "source": "DQN",
+      "target": "RL",
+      "weight": 1
+    },
+    {
+      "source": "CartPole",
+      "target": "RL",
+      "weight": 1
+    },
+    {
+      "source": "DQN",
+      "target": "PyTorch",
+      "weight": 1
+    },
+    {
+      "source": "CartPole",
+      "target": "DQN",
+      "weight": 1
+    },
+    {
+      "source": "CartPole",
+      "target": "PyTorch",
+      "weight": 1
+    },
+    {
+      "source": "PPO",
+      "target": "RL",
+      "weight": 1
+    },
+    {
+      "source": "Policy-Gradient",
+      "target": "RL",
+      "weight": 1
+    },
+    {
+      "source": "PPO",
+      "target": "Policy-Gradient",
+      "weight": 1
+    },
+    {
+      "source": "PPO",
+      "target": "PyTorch",
+      "weight": 1
+    },
+    {
+      "source": "Policy-Gradient",
+      "target": "PyTorch",
+      "weight": 1
+    }
+  ]
 }

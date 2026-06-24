@@ -1,4 +1,124 @@
 {
-  "generatedAt": "2026-06-24T06:06:28.118Z",
-  "articles": []
+  "generatedAt": "2026-06-24T06:08:51.090Z",
+  "articles": [
+    {
+      "title": "Agent Memory 系统设计：从查字典到回忆",
+      "date": "2026-06-24T00:00:00.000Z",
+      "tags": [
+        "Agent",
+        "Memory",
+        "RAG",
+        "Systems"
+      ],
+      "category": "agent",
+      "difficulty": "intermediate",
+      "summary": "讨论 Agent 中短期记忆、长期记忆和可检索记忆的职责边界。",
+      "github": "https://github.com/zengye20040311-cmd/BLOG",
+      "route": "/articles/agent/memory-system-design",
+      "kind": "articles"
+    },
+    {
+      "title": "RLHF 完整解析：SFT -> RM -> PPO",
+      "date": "2026-06-24T00:00:00.000Z",
+      "tags": [
+        "LLM",
+        "RLHF",
+        "PPO",
+        "Reward-Model"
+      ],
+      "category": "llm-rl",
+      "difficulty": "advanced",
+      "summary": "梳理 RLHF 的训练链路，以及每一环真正解决了什么问题。",
+      "github": "https://github.com/zengye20040311-cmd/BLOG",
+      "route": "/articles/llm/rlhf-explained",
+      "kind": "articles"
+    },
+    {
+      "title": "DQN 原理与 PyTorch 实现",
+      "date": "2026-06-24T00:00:00.000Z",
+      "tags": [
+        "RL",
+        "DQN",
+        "PyTorch",
+        "CartPole"
+      ],
+      "category": "reinforcement-learning",
+      "difficulty": "intermediate",
+      "summary": "从 Bellman 方程到经验回放和目标网络，完整拆解 DQN 的实现路径。",
+      "github": "https://github.com/zengye20040311-cmd/BLOG",
+      "route": "/articles/rl/dqn-implementation",
+      "kind": "articles"
+    },
+    {
+      "title": "PPO 深入理解：从策略梯度到裁剪优化",
+      "date": "2026-06-24T00:00:00.000Z",
+      "tags": [
+        "RL",
+        "PPO",
+        "Policy-Gradient",
+        "PyTorch"
+      ],
+      "category": "reinforcement-learning",
+      "difficulty": "advanced",
+      "summary": "从 surrogate objective 的直觉出发，理解 PPO 为什么在实践中更稳。",
+      "github": "https://github.com/zengye20040311-cmd/BLOG",
+      "route": "/articles/rl/ppo-deep-dive",
+      "kind": "articles"
+    },
+    {
+      "title": "index",
+      "date": null,
+      "tags": [],
+      "category": "articles",
+      "difficulty": null,
+      "summary": "# 技术文章",
+      "github": null,
+      "route": "/articles/",
+      "kind": "articles"
+    },
+    {
+      "title": "index",
+      "date": null,
+      "tags": [],
+      "category": "notes",
+      "difficulty": null,
+      "summary": "# 学习笔记",
+      "github": null,
+      "route": "/notes/",
+      "kind": "notes"
+    },
+    {
+      "title": "index",
+      "date": null,
+      "tags": [],
+      "category": "projects",
+      "difficulty": null,
+      "summary": "# 项目展示",
+      "github": null,
+      "route": "/projects/",
+      "kind": "projects"
+    },
+    {
+      "title": "Knowledge Agent",
+      "date": null,
+      "tags": [],
+      "category": "projects",
+      "difficulty": null,
+      "summary": "# Knowledge Agent",
+      "github": null,
+      "route": "/projects/knowledge-agent",
+      "kind": "projects"
+    },
+    {
+      "title": "RL Skill Agent",
+      "date": null,
+      "tags": [],
+      "category": "projects",
+      "difficulty": null,
+      "summary": "# RL Skill Agent",
+      "github": null,
+      "route": "/projects/rl-skill-agent",
+      "kind": "projects"
+    }
+  ]
 }
