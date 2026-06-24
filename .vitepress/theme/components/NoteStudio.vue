@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { marked } from "marked";
 import NoteTreeNode from "./NoteTreeNode.vue";
 
 type TreeNode = {
@@ -8,6 +9,13 @@ type TreeNode = {
   path: string;
   children?: TreeNode[];
   handle: FileSystemDirectoryHandle | FileSystemFileHandle;
+};
+
+type FrontmatterValue = string | string[];
+
+type ParsedNote = {
+  body: string;
+  data: Record<string, FrontmatterValue>;
 };
 
 const rootHandle = ref<FileSystemDirectoryHandle | null>(null);
@@ -22,8 +30,108 @@ const status = ref("还没有连接到本地 notes 文件夹。");
 const saving = ref(false);
 const loadingTree = ref(false);
 
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+});
+
 const hasUnsavedChanges = computed(() => content.value !== savedContent.value);
-const selectedRoute = computed(() => routeForPath(activeFilePath.value));
+
+const parsedNote = computed<ParsedNote>(() => parseNote(content.value));
+
+const previewTitle = computed(() => {
+  const title = parsedNote.value.data.title;
+  if (typeof title === "string" && title.trim()) {
+    return title.trim();
+  }
+  if (activeFilePath.value) {
+    return titleFromFileName(activeFilePath.value.split("/").pop() || "untitled");
+  }
+  return "未命名笔记";
+});
+
+const previewSummary = computed(() => {
+  const summary = parsedNote.value.data.summary;
+  return typeof summary === "string" && summary.trim()
+    ? summary.trim()
+    : "这篇笔记还没有填写摘要。";
+});
+
+const previewCategory = computed(() => {
+  const category = parsedNote.value.data.category;
+  return typeof category === "string" && category.trim() ? category.trim() : "notes";
+});
+
+const previewDate = computed(() => {
+  const date = parsedNote.value.data.date;
+  return typeof date === "string" && date.trim() ? date.trim() : todayString();
+});
+
+const previewTags = computed(() => {
+  const tags = parsedNote.value.data.tags;
+  if (Array.isArray(tags)) {
+    return tags.filter(Boolean);
+  }
+  if (typeof tags === "string" && tags.trim()) {
+    return tags
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+  return [];
+});
+
+const previewHtml = computed(() => {
+  const body = parsedNote.value.body.trim() || "# 开始写作\n\n右侧会实时预览这篇笔记。";
+  return marked.parse(body) as string;
+});
+
+function parseNote(source: string): ParsedNote {
+  if (!source.startsWith("---")) {
+    return {
+      body: source,
+      data: {},
+    };
+  }
+
+  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+  if (!match) {
+    return {
+      body: source,
+      data: {},
+    };
+  }
+
+  const [, rawFrontmatter, body] = match;
+  const data: Record<string, FrontmatterValue> = {};
+
+  for (const line of rawFrontmatter.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || !trimmed.includes(":")) {
+      continue;
+    }
+
+    const separator = trimmed.indexOf(":");
+    const key = trimmed.slice(0, separator).trim();
+    const rawValue = trimmed.slice(separator + 1).trim();
+
+    if (rawValue.startsWith("[") && rawValue.endsWith("]")) {
+      data[key] = rawValue
+        .slice(1, -1)
+        .split(",")
+        .map((item) => item.trim().replace(/^["']|["']$/g, ""))
+        .filter(Boolean);
+      continue;
+    }
+
+    data[key] = rawValue.replace(/^["']|["']$/g, "");
+  }
+
+  return {
+    body,
+    data,
+  };
+}
 
 function titleFromFileName(name: string) {
   return name
@@ -36,24 +144,6 @@ function titleFromFileName(name: string) {
 
 function todayString() {
   return new Date().toISOString().slice(0, 10);
-}
-
-function routeForPath(path: string) {
-  if (!path) {
-    return "";
-  }
-
-  const normalized = path.replace(/\\/g, "/");
-  const noExt = normalized.replace(/\.md$/i, "");
-
-  if (noExt === "index") {
-    return "/notes/";
-  }
-  if (noExt.endsWith("/index")) {
-    return `/notes/${noExt.slice(0, -6)}/`;
-  }
-
-  return `/notes/${noExt}`;
 }
 
 function templateForNewNote(fileName: string, directoryPath: string) {
@@ -145,7 +235,7 @@ async function refreshTree() {
 async function pickNotesFolder() {
   if (!("showDirectoryPicker" in window)) {
     status.value =
-      "当前浏览器不支持本地目录访问，建议用 Chromium 内核浏览器并在 localhost/https 下打开。";
+      "当前浏览器不支持本地目录访问。建议用 Chromium 内核浏览器，并通过 localhost 或 https 打开页面。";
     return;
   }
 
@@ -279,8 +369,8 @@ async function saveNote() {
         <p class="note-studio__eyebrow">Writing Studio</p>
         <h2>网页内笔记工作台</h2>
         <p>
-          先选择本地的 <code>notes/</code> 文件夹，然后就能直接在网页里建目录、建 Markdown、写内容并保存。
-          对于本地开发环境，VitePress 会在文件保存后自动刷新路由内容。
+          这个页面会直接连接你本机的 <code>notes/</code> 文件夹。连接后可以在网页里新建目录、新建 Markdown、
+          编辑正文，并在右侧实时预览，不需要本地编辑器和额外命令。
         </p>
       </div>
       <div class="note-studio__actions">
@@ -316,25 +406,43 @@ async function saveNote() {
         </ul>
       </aside>
 
-      <section class="note-studio__editor">
-        <div class="note-studio__editor-head">
-          <div>
-            <p class="note-studio__path">{{ activeFilePath || "还没有打开文件" }}</p>
-            <p class="note-studio__unsaved" v-if="hasUnsavedChanges">有未保存修改</p>
+      <section class="note-studio__workspace">
+        <section class="note-studio__editor">
+          <div class="note-studio__editor-head">
+            <div>
+              <p class="note-studio__path">{{ activeFilePath || "还没有打开文件" }}</p>
+              <p class="note-studio__unsaved" v-if="hasUnsavedChanges">有未保存修改</p>
+            </div>
+            <div class="note-studio__editor-actions">
+              <button type="button" @click="saveNote" :disabled="!activeFileHandle || saving">
+                {{ saving ? "保存中..." : "保存笔记" }}
+              </button>
+            </div>
           </div>
-          <div class="note-studio__editor-actions">
-            <a v-if="selectedRoute" :href="selectedRoute" target="_blank" rel="noreferrer">在博客中打开</a>
-            <button type="button" @click="saveNote" :disabled="!activeFileHandle || saving">
-              {{ saving ? "保存中..." : "保存笔记" }}
-            </button>
-          </div>
-        </div>
 
-        <textarea
-          v-model="content"
-          class="note-studio__textarea"
-          placeholder="选中一个 Markdown 文件后，就可以直接在这里编写。"
-        />
+          <textarea
+            v-model="content"
+            class="note-studio__textarea"
+            placeholder="选中一个 Markdown 文件后，就可以直接在这里编写。"
+          />
+        </section>
+
+        <section class="note-studio__preview">
+          <div class="note-studio__preview-head">
+            <p class="note-studio__eyebrow">Live Preview</p>
+            <h3>{{ previewTitle }}</h3>
+            <p>{{ previewSummary }}</p>
+          </div>
+
+          <div class="note-studio__meta">
+            <span>{{ previewCategory }}</span>
+            <span>{{ previewDate }}</span>
+            <span v-if="previewTags.length">{{ previewTags.join(" / ") }}</span>
+            <span v-else>未填写 tags</span>
+          </div>
+
+          <article class="note-studio__preview-body vp-doc" v-html="previewHtml" />
+        </section>
       </section>
     </div>
   </section>
@@ -357,7 +465,8 @@ async function saveNote() {
 .note-studio__actions,
 .note-studio__toolbar,
 .note-studio__editor-head,
-.note-studio__editor-actions {
+.note-studio__editor-actions,
+.note-studio__workspace {
   display: grid;
   gap: 1rem;
 }
@@ -376,11 +485,13 @@ async function saveNote() {
   font-weight: 700;
 }
 
-.note-studio__hero h2 {
+.note-studio__hero h2,
+.note-studio__preview-head h3 {
   margin: 0 0 0.75rem;
 }
 
-.note-studio__hero p {
+.note-studio__hero p,
+.note-studio__preview-head p {
   margin: 0;
   line-height: 1.7;
 }
@@ -427,8 +538,14 @@ async function saveNote() {
   align-items: start;
 }
 
+.note-studio__workspace {
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  align-items: start;
+}
+
 .note-studio__sidebar,
-.note-studio__editor {
+.note-studio__editor,
+.note-studio__preview {
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(31, 42, 55, 0.08);
@@ -468,7 +585,8 @@ async function saveNote() {
   background: rgba(20, 117, 108, 0.08);
 }
 
-.note-studio__editor {
+.note-studio__editor,
+.note-studio__preview {
   padding: 1rem;
 }
 
@@ -483,24 +601,57 @@ async function saveNote() {
   align-items: center;
 }
 
-.note-studio__editor-actions a {
-  color: #14756c;
-  font-weight: 700;
-}
-
 .note-studio__unsaved {
   color: #cc6b2c;
 }
 
 .note-studio__textarea {
   width: 100%;
-  min-height: 620px;
+  min-height: 640px;
   border: 1px solid rgba(31, 42, 55, 0.12);
   border-radius: 20px;
   padding: 1rem 1.1rem;
   font: 400 0.98rem/1.75 ui-monospace, SFMono-Regular, Consolas, monospace;
   background: rgba(255, 255, 255, 0.96);
   resize: vertical;
+}
+
+.note-studio__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 1rem 0 1.1rem;
+}
+
+.note-studio__meta span {
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(20, 117, 108, 0.1);
+  color: #14756c;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.note-studio__preview-body {
+  padding: 1rem 1.15rem;
+  border-radius: 18px;
+  background: rgba(248, 244, 237, 0.8);
+  min-height: 640px;
+}
+
+.note-studio__preview-body :deep(h1:first-child) {
+  margin-top: 0;
+}
+
+@media (max-width: 1200px) {
+  .note-studio__workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .note-studio__textarea,
+  .note-studio__preview-body {
+    min-height: 520px;
+  }
 }
 
 @media (max-width: 960px) {
@@ -514,8 +665,9 @@ async function saveNote() {
     grid-auto-flow: row;
   }
 
-  .note-studio__textarea {
-    min-height: 480px;
+  .note-studio__textarea,
+  .note-studio__preview-body {
+    min-height: 420px;
   }
 }
 </style>
